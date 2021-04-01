@@ -1,0 +1,10 @@
+scipy>=1.4.1
+pandas>=1.2.3
+numba>=0.45.1
+tape_proteins==0.4
+torch==1.4.0
+tqdm>=4.51.0
+numpy>=1.18.5
+biopython>=1.78
+msgpack_python>=0.5.6
+scikit_learn>=0.24.1
