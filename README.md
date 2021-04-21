@@ -22,7 +22,7 @@ cd ECNet
 export PYTHONPATH=$PWD:$PYTHONPATH
 ```
 ## Dependencies
-This package is tested under `Python 3.7` and `CUDA 10.1`. Please see `requirements.txt` for necessary python dependencies, all of which can be easily installed with `pip` or `conda`. Due to an issue of installing `pytorch 1.4.0` with `pip`, please install `pytorch` with `conda` first.
+This package is tested with `Python 3.7` and `CUDA 10.1` on `Ubuntu 18.04`, with access to an Nvidia GeForce TITAN X GPU (12GB RAM) and Intel Xeon E5-2650 v3 CPU (2.30 GHz, 512G RAM). Please see `requirements.txt` for necessary python dependencies, all of which can be easily installed with `pip` or `conda`. Due to an issue of installing `pytorch 1.4.0` with `pip`, please install `pytorch` with `conda` first.
 ```bash
 conda install pytorch==1.4.0 cudatoolkit=10.1 -c pytorch
 pip install -r requirements.txt
@@ -46,6 +46,7 @@ pip install -r requirements.txt
         --save_prediction \
         --save_checkpoint 
     ```
+    It typically takes no more than 15 min on our tested environment to run this example. The output (printed to stdout) would be the correlation between predicted and ground-truth fitness values.
 
 ## Running on your own data
 ECNet has two required input files: 1) a FASTA file of the wild-type sequence, and 2) a TSV file describes the fitness values of variants. Other optional input files include the output of CCMPred for extracting local features and separate test TSV file.
