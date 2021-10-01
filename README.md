@@ -12,7 +12,7 @@ An evolutionary context-integrated deep learning framework for protein engineeri
   - [Contact](#contact)
 
 ## Overview
-ECNet (evolutionary context-integrated neural network) is a deep learning model that guides protein engineering by predicting protein fitness from the sequence. It integrates local evolutionary context from homologous sequences that explicitly model residue-residue epistasis for the protein of interest with the global evolutionary context that encodes rich semantic and structural features from the enormous protein sequence universe. Please see our [preprint](https://doi.org/10.1101/2020.01.16.908509) for details.
+ECNet (evolutionary context-integrated neural network) is a deep learning model that guides protein engineering by predicting protein fitness from the sequence. It integrates local evolutionary context from homologous sequences that explicitly model residue-residue epistasis for the protein of interest with the global evolutionary context that encodes rich semantic and structural features from the enormous protein sequence universe. Please see our *Nature Communications* [paper](https://doi.org/10.1038/s41467-021-25976-8) for details.
 ![ECNet](doc/overview.png)
 ## Installation
 Clone and export the GitHub repository directory to python path
@@ -91,23 +91,21 @@ We suggest users tune hyperparameters for new protein. Several hyperparameters a
 6. Use the argument `--local_feature example.braw` to provide the local features to ECNet.
 
 ## Citation
-At this moment, please cite the following preprint.
-
-> Luo, Y., Vo, L., Ding, H., Su, Y., Liu, Y., Qian, W. W., Zhao, H., & Peng, J. (2020). Evolutionary context-integrated deep sequence modeling for protein engineering. Cold Spring Harbor Laboratory. https://doi.org/10.1101/2020.01.16.908509
+> Luo, Y. et al. ECNet is an evolutionary context-integrated deep learning framework for protein engineering. *Nat Commun* **12**, 5743 (2021). https://doi.org/10.1038/s41467-021-25976-8
 
 ```
-@article {Luo2020.01.16.908509,
-	author = {Luo, Yunan and Vo, Lam and Ding, Hantian and Su, Yufeng and Liu, Yang and Qian, Wesley Wei and Zhao, Huimin and Peng, Jian},
-	title = {Evolutionary context-integrated deep sequence modeling for protein engineering},
-	elocation-id = {2020.01.16.908509},
-	year = {2020},
-	doi = {10.1101/2020.01.16.908509},
-	publisher = {Cold Spring Harbor Laboratory},
-	URL = {https://www.biorxiv.org/content/early/2020/01/17/2020.01.16.908509},
-	eprint = {https://www.biorxiv.org/content/early/2020/01/17/2020.01.16.908509.full.pdf},
-	journal = {bioRxiv}
+@article{luo2021ecnet,
+  doi = {10.1038/s41467-021-25976-8},
+  url = {https://doi.org/10.1038/s41467-021-25976-8},
+  year = {2021},
+  month = sep,
+  publisher = {Springer Science and Business Media {LLC}},
+  volume = {12},
+  number = {1},
+  author = {Yunan Luo and Guangde Jiang and Tianhao Yu and Yang Liu and Lam Vo and Hantian Ding and Yufeng Su and Wesley Wei Qian and Huimin Zhao and Jian Peng},
+  title = {{ECNet} is an evolutionary context-integrated deep learning framework for protein engineering},
+  journal = {Nature Communications}
 }
-
 ```
 ## Contact
 Please submit GitHub issues or contact Yunan Luo (luoyunan[at]gmail[dot]com) for any questions related to the source code.
