@@ -86,9 +86,11 @@ class Dataset(object):
         self.train_valid_df = pd.concat(
                 [self.train_df, self.valid_df]).reset_index(drop=True)
 
-        self.ccmpred_encoder = CCMPredEncoder(
-            ccmpred_output=ccmpred_output, seq_len=len(self.native_sequence))
-        self.tape_encoder = TAPEEncoder()
+        if self.use_loc_feat:
+            self.ccmpred_encoder = CCMPredEncoder(
+                ccmpred_output=ccmpred_output, seq_len=len(self.native_sequence))
+        if self.use_glob_feat:
+            self.tape_encoder = TAPEEncoder()
 
     def _read_native_sequence(self):
         fasta = SeqIO.read(self.fasta, 'fasta')
