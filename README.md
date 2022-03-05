@@ -91,7 +91,7 @@ We suggest users tune hyperparameters for new protein. Several hyperparameters a
 
 ## Train on dataset A and test on dataset B
 The following example shows how to train ECNet on dataset A (passed via `--train`) and test it on another dataset B (passed via `--test`).
-- Example 1: train on single-mutant fitness data of RRM, and predict for double-mutants
+- Example 1: train on single-mutant fitness data of RRM ([source](https://rnajournal.cshlp.org/content/19/11/1537.long)), and predict for double-mutants
     ```
     CUDA_VISIBLE_DEVICES=0 python scripts/run_example.py \
         --train data/RRM_single.tsv \
@@ -105,7 +105,7 @@ The following example shows how to train ECNet on dataset A (passed via `--train
     ```
 - Example 2: you can also load the trained model using the `--save_model_dir` argument and predict for test dataset:
     ```
-    CUDA_VISIBLE_DEVICES=6 python scripts/run_example.py \
+    CUDA_VISIBLE_DEVICES=0 python scripts/run_example.py \
         --test data/RRM_double.tsv \
         --fasta data/RRM.fasta \
         --local_feature data/RRM.braw \
