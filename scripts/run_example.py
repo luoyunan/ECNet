@@ -5,6 +5,7 @@ def main():
     ecnet = ECNet(
         output_dir=args.output_dir,
         train_tsv=args.train,
+        test_tsv=args.test,
         fasta=args.fasta,
         ccmpred_output=args.local_feature,
         use_loc_feat=(not args.no_local_feature),
