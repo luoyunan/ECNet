@@ -8,6 +8,7 @@ An evolutionary context-integrated deep learning framework for protein engineeri
   - [Quick Example](#quick-example)
   - [Running on your own data](#running-on-your-own-data)
   - [Generate local features using HHblits and CCMPred](#generate-local-features-using-hhblits-and-ccmpred)
+  - [Train on dataset A and test on dataset B](#train-on-dataset-a-and-test-on-dataset-b)
   - [Citation](#citation)
   - [Contact](#contact)
 
@@ -29,13 +30,11 @@ pip install -r requirements.txt
 ```
 
 ## Quick Example
-1. Download example data (~95MB) from Google Drive. (modified based on this [solution](https://gist.github.com/iamtekeste/3cdfd0366ebfd2c0d805))
+1. Download example data (~102MB) from Dropbox.
     ```
-    wget --load-cookies /tmp/cookies.txt "https://docs.google.com/uc?export=download&confirm=$(wget --quiet --save-cookies /tmp/cookies.txt --keep-session-cookies --no-check-certificate 'https://docs.google.com/uc?export=download&id=1O1qpuaNgY7XFU_LDIq7THc2ESzuPqEsd' -O- | sed -rn 's/.*confirm=([0-9A-Za-z_]+).*/\1\n/p')&id=1O1qpuaNgY7XFU_LDIq7THc2ESzuPqEsd" -O data.tar.gz && rm -rf /tmp/cookies.txt
+    wget https://www.dropbox.com/s/nkgubuwfwiyy0ze/data.tar.gz
     tar xf data.tar.gz
     ```
-    If you run into problems of downloading the example data using the above `wget` command, please manually download [here](https://drive.google.com/file/d/1O1qpuaNgY7XFU_LDIq7THc2ESzuPqEsd/view?usp=sharing).
-
 2. Run the example script. The following script trains an ECNet model using the fitness data of DNA methylase HaeIII ([source](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004421)). The scripts randomly splits 70% as training data, 10% as validation data, and 20% as test data.
     ```bash
     CUDA_VISIBLE_DEVICES=0 python scripts/run_example.py \
@@ -89,6 +88,31 @@ We suggest users tune hyperparameters for new protein. Several hyperparameters a
     ccmpred example.psc example.mat -b example.braw -d 0
     ```
 6. Use the argument `--local_feature example.braw` to provide the local features to ECNet.
+
+## Train on dataset A and test on dataset B
+The following example shows how to train ECNet on dataset A (passed via `--train`) and test it on another dataset B (passed via `--test`).
+- Example 1: train on single-mutant fitness data of RRM, and predict for double-mutants
+    ```
+    CUDA_VISIBLE_DEVICES=0 python scripts/run_example.py \
+        --train data/RRM_single.tsv \
+        --test data/RRM_double.tsv \
+        --fasta data/RRM.fasta \
+        --local_feature data/RRM.braw \
+        --output_dir ./output/RRM \
+        --save_checkpoint \
+        --n_ensembles 2 \
+        --epochs 100
+    ```
+- Example 2: you can also load the trained model using the `--save_model_dir` argument and predict for test dataset:
+    ```
+    CUDA_VISIBLE_DEVICES=6 python scripts/run_example.py \
+        --test data/RRM_double.tsv \
+        --fasta data/RRM.fasta \
+        --local_feature data/RRM.braw \
+        --n_ensembles 2 \
+        --output_dir ./output/RRM \
+        --saved_model_dir ./output/RRM
+    ```
 
 ## Citation
 > Luo, Y. et al. ECNet is an evolutionary context-integrated deep learning framework for protein engineering. *Nat Commun* **12**, 5743 (2021). https://doi.org/10.1038/s41467-021-25976-8
