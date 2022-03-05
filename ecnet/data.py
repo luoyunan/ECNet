@@ -1,3 +1,4 @@
+import warnings
 import numpy as np
 import pandas as pd
 from Bio import SeqIO
@@ -72,13 +73,19 @@ class Dataset(object):
         self.full_df = self._read_mutation_df(train_tsv)
 
         if test_tsv is None:
-            assert len(split_ratio) == 3, \
-                'split_ratio should have 3 elements if test_tsv is None'
+            if len(split_ratio) != 3:
+                split_ratio = [0.7, 0.1, 0.2]
+                warnings.warn("\nsplit_ratio should have 3 elements if test_tsv is None." + \
+                    f"Changing split_ratio to {split_ratio}. " + \
+                    "Set to other values using --split_ratio.")
             self.train_df, self.valid_df, self.test_df = \
                 self._split_dataset_df(self.full_df, split_ratio)
         else:
-            assert len(split_ratio) == 2
-            'split_ratio should have 2 elements if test_tsv is provided'
+            if len(split_ratio) != 2:
+                split_ratio = [0.9, 0.1]
+                warnings.warn("\nsplit_ratio should have 2 elements if test_tsv is provided. " + \
+                    f"Changing split_ratio to {split_ratio}. " + \
+                    "Set to other values using --split_ratio.")
             self.test_df = self._read_mutation_df(test_tsv)
             self.train_df, self.valid_df, _ = \
                 self._split_dataset_df(self.full_df, split_ratio)
