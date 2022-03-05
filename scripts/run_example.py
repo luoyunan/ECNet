@@ -16,11 +16,14 @@ def main():
         d_h=args.d_h, nlayers=args.n_layers,
         batch_size=args.batch_size, save_log=args.save_log
     )
-    ecnet.train(
-        epochs=args.epochs, patience=args.patience,
-        log_freq=args.log_freq, eval_freq=args.eval_freq,
-        save_checkpoint=args.save_checkpoint,
-    )
+    if args.saved_model_dir:
+        ecnet.load_checkpoint(args.saved_model_dir)
+    else:
+        ecnet.train(
+            epochs=args.epochs, patience=args.patience,
+            log_freq=args.log_freq, eval_freq=args.eval_freq,
+            save_checkpoint=args.save_checkpoint,
+        )
     test_results = ecnet.test(
         model_label='Test', mode='ensemble',
         save_prediction=args.save_prediction,
@@ -31,7 +34,7 @@ def main():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(formatter_class=argparse.ArgumentDefaultsHelpFormatter)
-    parser.add_argument('--train', action='store', required=True, help='training data (TSV format)')
+    parser.add_argument('--train', action='store', help='training data (TSV format)')
     parser.add_argument('--test', action='store', help='test data (TSV format)')
     parser.add_argument('--fasta', action='store', required=True, help='native sequence (FASTA format)')
     parser.add_argument('--local_feature', action='store', help='precomputed CCMPred feature (binary format)')
@@ -54,6 +57,7 @@ if __name__ == "__main__":
     parser.add_argument('--eval_freq', action='store', type=int, default=50,
                         help='evaluate (on validation set) for this many epochs')
 
+    parser.add_argument('--saved_model_dir', action='store', help='directory of trained models')
     parser.add_argument('--output_dir', action='store', help='directory to save model, prediction, etc.')
     parser.add_argument('--save_checkpoint', action='store_true', default=False, help='save pytorch model checkpoint')
     parser.add_argument('--save_prediction', action='store_true', default=False, help='save prediction')

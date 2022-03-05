@@ -84,7 +84,7 @@ class ECNet(object):
     def test_df(self):
         return self.test_pack[1]
 
-    def load_pretrained_model(self, checkpoint_dir):
+    def load_checkpoint(self, checkpoint_dir):
         checkpoint_dir = pathlib.Path(checkpoint_dir)
         if not checkpoint_dir.is_dir():
             raise ValueError(f'{checkpoint_dir} is not a directory')
