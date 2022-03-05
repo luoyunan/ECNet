@@ -70,7 +70,10 @@ class Dataset(object):
         self.rng = np.random.RandomState(random_seed)
 
         self.native_sequence = self._read_native_sequence()
-        self.full_df = self._read_mutation_df(train_tsv)
+        if train_tsv is not None:
+            self.full_df = self._read_mutation_df(train_tsv)
+        else:
+            self.full_df = None
 
         if test_tsv is None:
             if len(split_ratio) != 3:
@@ -87,10 +90,12 @@ class Dataset(object):
                     f"Changing split_ratio to {split_ratio}. " + \
                     "Set to other values using --split_ratio.")
             self.test_df = self._read_mutation_df(test_tsv)
-            self.train_df, self.valid_df, _ = \
-                self._split_dataset_df(self.full_df, split_ratio)
+            if self.full_df is not None:
+                self.train_df, self.valid_df, _ = \
+                    self._split_dataset_df(self.full_df, split_ratio)
 
-        self.train_valid_df = pd.concat(
+        if self.full_df is not None:
+            self.train_valid_df = pd.concat(
                 [self.train_df, self.valid_df]).reset_index(drop=True)
 
         if self.use_loc_feat:
