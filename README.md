@@ -30,20 +30,22 @@ pip install -r requirements.txt
 ```
 
 ## Quick Example
-1. Download example data (~102MB) from Dropbox.
+1. Download example data (~5.4MB) from Dropbox.
     ```
     wget https://www.dropbox.com/s/nkgubuwfwiyy0ze/data.tar.gz
     tar xf data.tar.gz
     ```
-2. Run the example script. The following script trains an ECNet model using the fitness data of DNA methylase HaeIII ([source](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1004421)). The scripts randomly splits 70% as training data, 10% as validation data, and 20% as test data.
+2. Run the example script. The following script trains an ECNet model using the fitness data of the
+second RRM domain of Pab1 ([source](https://rnajournal.cshlp.org/content/19/11/1537.long)). The scripts randomly splits 70% as training data, 10% as validation data, and 20% as test data.
     ```bash
     CUDA_VISIBLE_DEVICES=0 python scripts/run_example.py \
-        --train data/MTH3_HAEAESTABILIZED_Tawfik2015.tsv \
-        --fasta data/MTH3_HAEAESTABILIZED_Tawfik2015.fasta \
-        --local_feature data/MTH3_HAEAESTABILIZED_Tawfik2015.braw \
-        --output_dir ./output \
+        --train data/RRM_single.tsv \
+        --fasta data/RRM.fasta \
+        --local_feature data/RRM.braw \
+        --output_dir ./output/RRM_CV \
         --save_prediction \
-        --save_checkpoint 
+        --n_ensembles 2 \
+        --epochs 100
     ```
     It typically takes no more than 15 min on our tested environment to run this example. The output (printed to stdout) would be the correlation between predicted and ground-truth fitness values.
 
@@ -97,6 +99,7 @@ The following example shows how to train ECNet on dataset A (passed via `--train
         --train data/RRM_single.tsv \
         --test data/RRM_double.tsv \
         --fasta data/RRM.fasta \
+        --split_ratio 0.9 0.1 \
         --local_feature data/RRM.braw \
         --output_dir ./output/RRM \
         --save_checkpoint \
