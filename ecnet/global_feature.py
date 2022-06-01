@@ -11,9 +11,8 @@ from tqdm import tqdm
 import torch
 from torch.utils.data import Dataset
 from tape import utils
-from tape.registry import registry
 from tape.training import ForwardRunner
-from tape.tokenizers import TAPETokenizer
+from tape import ProteinBertModel, TAPETokenizer
 
 logger = logging.getLogger(__name__)
 
@@ -83,8 +82,6 @@ class EmbedDataset(Dataset):
 
 class TAPEEncoder(object):
     def __init__(self,
-        model_type: str = 'transformer',
-        from_pretrained: str = None,
         batch_size: int = 128,
         model_config_file: Optional[str] = None,
         full_sequence_embed: bool = True,
@@ -105,9 +102,7 @@ class TAPEEncoder(object):
         utils.setup_logging(local_rank, save_path=None, log_level=log_level)
         utils.set_random_seeds(seed, n_gpu)
 
-        task_spec = registry.get_task_spec('embed')
-        model = registry.get_task_model(
-            model_type, task_spec.name, model_config_file, from_pretrained)
+        model = ProteinBertModel.from_pretrained('bert-base')
         model = model.to(device)
         runner = ForwardRunner(model, device, n_gpu)
         runner.initialize_distributed_model()
